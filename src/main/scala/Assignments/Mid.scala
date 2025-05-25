@@ -16,7 +16,9 @@ object Mid extends App {
 
   def middle[T](list: List[T]): Option[T] = {
     val len = size(list)
-    get(list, len / 2)
+    if (len % 2 != 0)
+      get(list, len / 2)
+    else get (list, len/2 - 1)
   }
   println(middle(List(1, 4, 3, 2, 5)))
   println(middle(List(1, 2, 3, 4, 5, 6)))
