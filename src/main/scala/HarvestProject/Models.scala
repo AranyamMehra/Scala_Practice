@@ -1,5 +1,4 @@
 package HarvestProject
-
 import java.time.LocalDate
 
 case class HarvestRecord(date: LocalDate, gatherer: String, fruit: String, amount: Double)
