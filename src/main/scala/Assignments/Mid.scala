@@ -20,8 +20,27 @@ object Mid extends App {
       get(list, len / 2)
     else get (list, len/2 - 1)
   }
-  println(middle(List(1, 4, 3, 2, 5)))
-  println(middle(List(1, 2, 3, 4, 5, 6)))
-  println(middle(List(1)))
-  println(middle(Nil))
+
+  def FindMiddle [T] (list: List [T]): Option [T] = {
+    def loop (slow: List [T], fast: List[T]): Option [T] = fast match {
+      case _ :: _ :: Nil => slow.headOption
+      case _ :: _ :: tail => loop (slow.tail, tail)
+      case _ => slow.headOption
+    }
+    loop (list, list)
+  }
+
+  def safePrintMiddle[T](list: List[T]): Unit = {
+    try {
+      println(FindMiddle(list))
+    } catch {
+      case e: Exception => println(s"Exception caught: ${e.getMessage}")
+    }
+  }
+
+
+  safePrintMiddle(List(1,2,3,4,5,6,7))
+  safePrintMiddle (List(1, 2, 3, 4, 5, 6))
+  safePrintMiddle(List(1))
+  safePrintMiddle(Nil)
 }
