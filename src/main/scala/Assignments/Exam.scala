@@ -14,7 +14,6 @@ object Exam extends App{
     val result = if (col (2) >= col (0) * col (1)) "Yes" else "No"
     s"$line, $result"
   }
-
   val writer = new PrintWriter (out)
   results.foreach(writer.println)
   writer.close()
