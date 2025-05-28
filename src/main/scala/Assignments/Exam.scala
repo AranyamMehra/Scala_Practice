@@ -8,7 +8,6 @@ object Exam extends App{
   val out = "src/main/scala/Data/exam_out.csv"
 
   val lines = Source.fromFile(filePath).getLines().toList
-
   val results = lines.map {line =>
     val col = line.split (",").map (_.trim.toInt)
 
