@@ -20,10 +20,5 @@ object MainApp
       val harvestRecords = HarvestParser.parse("src/main/scala/Data/harvest.csv") // Fresh iterator each time
       analyzer.compute(harvestRecords, priceMap)
     }
-//    Analyzer.bestFruitByMonth(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
-//    Analyzer.bestGathererByMonth(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
-//    Analyzer.worstFruitByMonth(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
-//    Analyzer.bestAndWorstFruitOverall(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
-//    Analyzer.bestGatherer(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
   }
 }
