@@ -2,7 +2,7 @@ package HarvestProject.analyzer
 
 import java.time.LocalDate
 import scala.collection.mutable
-import HarvestProject.{Analyzer, DateParser, HarvestRecord}  // <-- Import the trait and other required classes
+import HarvestProject.{Analyzer, DateParser, HarvestRecord}
 
 class BestFruitByMonth extends Analyzer {
   override def compute(harvestRecords: Iterator[HarvestRecord], priceMap: Map[(LocalDate, String), Double]): Unit = {
@@ -17,8 +17,7 @@ class BestFruitByMonth extends Analyzer {
       }
     }
 
-    val grouped = fruitIncomeByMonth.toList.groupBy(_._1._1)
-      .view.mapValues(_.maxBy(_._2)).toMap
+    val grouped = fruitIncomeByMonth.toList.groupBy(_._1._1).view.mapValues(_.maxBy(_._2)).toMap
 
     val best = grouped.map { case (month, ((_, fruit), income)) => s"$month: $fruit ($income)" }
     println("\nBest fruit by month:")

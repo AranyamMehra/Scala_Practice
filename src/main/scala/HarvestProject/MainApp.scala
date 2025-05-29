@@ -17,7 +17,7 @@ object MainApp
     )
 
     analyzers.foreach { analyzer =>
-      val harvestRecords = HarvestParser.parse("src/main/scala/Data/harvest.csv") // Fresh iterator each time
+      val harvestRecords = HarvestParser.parse("src/main/scala/Data/harvest.csv")
       analyzer.compute(harvestRecords, priceMap)
     }
   }

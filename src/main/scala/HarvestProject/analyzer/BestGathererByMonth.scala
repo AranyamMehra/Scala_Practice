@@ -16,9 +16,7 @@ class BestGathererByMonth extends Analyzer {
       }
     }
 
-    val bestByMonth = incomeMap
-      .groupBy(_._1._1).view
-      .mapValues(_.maxBy(_._2)).toMap
+    val bestByMonth = incomeMap.groupBy(_._1._1).view.mapValues(_.maxBy(_._2)).toMap
       .map { case (month, ((_, gatherer), income)) => (month, (gatherer, income)) }
     println()
     println("Best gatherer by month:")
