@@ -6,11 +6,11 @@ import java.time.LocalDate
 object PriceParser {
   def parse(path: String): Iterator[PriceRecord] = {
     val source = Source.fromFile(path)
-    val lines = source.getLines().drop(1) // Skip header
+    val lines = source.getLines().drop(1)
     lines.map { line =>
       val cols = line.split(",").map(_.trim)
-      val date = DateParser.parsePriceDate(cols(1)) // Note: index 1 is date
-      PriceRecord(date, cols(0), cols(2).toDouble)  // (fruit, date, price)
+      val date = DateParser.parsePriceDate(cols(1))
+      PriceRecord(date, cols(0), cols(2).toDouble)
     }
   }
 

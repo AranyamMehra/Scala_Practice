@@ -1,21 +1,29 @@
 package HarvestProject
+import HarvestProject.analyzer._
+import java.time.LocalDate
 
 object MainApp
 {
   def main(args: Array[String]): Unit =
   {
-    val harvest = CsvReader.readFile("src/main/scala/Data/harvest.csv")
-    val prices = CsvReader.readFile("src/main/scala/Data/prices.csv")
+    val priceMap = PriceParser.priceMap
 
-    val harvestRecords = CsvReader.parseHarvest(harvest)
-    val priceRecords = CsvReader.parsePrices(prices)
+    val analyzers: List[Analyzer] = List(
+      new BestFruitByMonth(),
+      new BestGathererByMonth(),
+      new WorstFruitByMonth(),
+      new bestAndWorstFruitOverall(),
+      new bestGatherer()
+    )
 
-    val joined = Analyzer.joinRecords(harvestRecords, priceRecords)
-
-    Analyzer.bestGathererByMonth(joined)
-    Analyzer.bestFruitByMonth(joined)
-    Analyzer.worstFruitByMonth(joined)
-    Analyzer.bestAndWorstFruitOverall(joined)
-    Analyzer.bestGatherer(joined)
+    analyzers.foreach { analyzer =>
+      val harvestRecords = HarvestParser.parse("src/main/scala/Data/harvest.csv") // Fresh iterator each time
+      analyzer.compute(harvestRecords, priceMap)
+    }
+//    Analyzer.bestFruitByMonth(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
+//    Analyzer.bestGathererByMonth(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
+//    Analyzer.worstFruitByMonth(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
+//    Analyzer.bestAndWorstFruitOverall(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
+//    Analyzer.bestGatherer(HarvestParser.parse("src/main/scala/Data/harvest.csv"), priceMap)
   }
 }
