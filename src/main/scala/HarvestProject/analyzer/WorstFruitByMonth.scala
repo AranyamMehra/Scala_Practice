@@ -19,7 +19,6 @@ class WorstFruitByMonth extends Analyzer{
     val grouped = fruitIncomeByMonth.toList.groupBy(_._1._1).view.mapValues(_.minBy(_._2)).toMap
 
     val worst = grouped.map { case (month, ((_, fruit), income)) => s"$month: $fruit ($income)" }
-
     println()
     println("Worst fruit by month:")
     println(worst.mkString("\n"))

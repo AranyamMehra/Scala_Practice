@@ -1,4 +1,5 @@
 package HarvestProject.analyzer
+
 import HarvestProject.{Analyzer, DateParser, HarvestRecord}
 import java.time.LocalDate
 import scala.collection.mutable
@@ -18,6 +19,7 @@ class BestGathererByMonth extends Analyzer {
 
     val bestByMonth = incomeMap.groupBy(_._1._1).view.mapValues(_.maxBy(_._2)).toMap
       .map { case (month, ((_, gatherer), income)) => (month, (gatherer, income)) }
+
     println()
     println("Best gatherer by month:")
     println(bestByMonth.mkString("\n"))
