@@ -1,6 +1,5 @@
 package HarvestProject
 import HarvestProject.analyzer._
-import java.time.LocalDate
 
 object MainApp
 {
