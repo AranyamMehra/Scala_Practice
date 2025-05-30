@@ -16,7 +16,7 @@ object MainApp
     )
 
     analyzers.foreach { analyzer =>
-      val harvestRecords = HarvestParser.parse("src/main/scala/Data/harvest.csv")
+      lazy val harvestRecords = HarvestParser.parse("src/main/scala/Data/harvest.csv")
       analyzer.compute(harvestRecords, priceMap)
     }
   }
