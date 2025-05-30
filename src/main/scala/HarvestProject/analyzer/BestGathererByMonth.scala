@@ -5,19 +5,19 @@ import java.time.LocalDate
 import scala.collection.mutable
 
 class BestGathererByMonth extends Analyzer {
-  private val incomeMap = scala.collection.mutable.Map[(String, String), Double]()
+  private val amountMap = scala.collection.mutable.Map[(String, String), Double]()
 
   override def compute(record: HarvestRecord, priceOpt: Option[Double]): Unit = {
     priceOpt.foreach { price =>
       val month = DateParser.formatToMonth(record.date)
       val key = (month, record.gatherer)
-      val income = record.amount * price
-      incomeMap.update(key, incomeMap.getOrElse(key, 0.0) + income)
+      val amount = record.amount
+      amountMap.update(key, amountMap.getOrElse(key, 0.0) + amount)
     }
   }
 
   override def report(): Unit = {
-    val bestByMonth = incomeMap.groupBy(_._1._1).view
+    val bestByMonth = amountMap.groupBy(_._1._1).view
       .mapValues(_.maxBy(_._2)).toMap
       .map { case (month, ((_, gatherer), income)) => (month, (gatherer, income)) }
     println ()
