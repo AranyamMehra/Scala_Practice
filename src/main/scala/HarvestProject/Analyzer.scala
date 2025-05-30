@@ -2,5 +2,6 @@ package HarvestProject
 import java.time.LocalDate
 
 trait Analyzer {
-  def compute(harvestRecords: Iterator[HarvestRecord], priceMap: Map[(LocalDate, String), Double]): Unit
+  def compute(record: HarvestRecord, price: Option[Double]): Unit
+  def report(): Unit
 }

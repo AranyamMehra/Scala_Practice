@@ -4,18 +4,20 @@ import HarvestProject.{Analyzer, DateParser, HarvestRecord}
 import java.time.LocalDate
 import scala.collection.mutable
 
-class bestGatherer extends Analyzer{
-  def compute(harvestRecords: Iterator[HarvestRecord], priceMap: Map[(LocalDate, String), Double]): Unit = {
+class bestGatherer extends Analyzer {
+  private val gathererIncome = scala.collection.mutable.Map[String, Double]()
 
-    val gathererIncome = mutable.Map[String, Double]()
-
-    for (h <- harvestRecords) {
-      priceMap.get((h.date, h.fruit)).foreach { price =>
-        val income = h.amount * price
-        gathererIncome.update(h.gatherer, gathererIncome.getOrElse(h.gatherer, 0.0) + income)
-      }
+  override def compute(record: HarvestRecord, price: Option[Double]): Unit = {
+    price.foreach { p =>
+      val income = record.amount * p
+      gathererIncome.update(
+        record.gatherer,
+        gathererIncome.getOrElse(record.gatherer, 0.0) + income
+      )
     }
+  }
 
+  override def report(): Unit = {
     println()
     if (gathererIncome.nonEmpty) {
       val (bestGatherer, income) = gathererIncome.maxBy(_._2)

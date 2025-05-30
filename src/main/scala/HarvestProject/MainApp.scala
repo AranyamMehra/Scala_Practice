@@ -15,9 +15,10 @@ object MainApp
       new bestGatherer()
     )
 
-    analyzers.foreach { analyzer =>
-      lazy val harvestRecords = HarvestParser.parse("src/main/scala/Data/harvest.csv")
-      analyzer.compute(harvestRecords, priceMap)
+    for (record <- HarvestParser.parse("src/main/scala/Data/harvest.csv")) {
+      val price = priceMap.get((record.date, record.fruit))
+      analyzers.foreach(_.compute(record, price))
     }
+    analyzers.foreach(_.report())
   }
 }
