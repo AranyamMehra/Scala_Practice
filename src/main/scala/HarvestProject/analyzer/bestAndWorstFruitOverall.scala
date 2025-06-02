@@ -1,9 +1,9 @@
 package HarvestProject.analyzer
 
 import HarvestProject.{Analyzer, HarvestRecord}
-
+import scala.collection._
 class bestAndWorstFruitOverall extends Analyzer {
-  private val fruitIncomeOverall = scala.collection.mutable.Map[String, Double]()
+  private val fruitIncomeOverall = mutable.Map[String, Double]()
 
   override def compute(record: HarvestRecord, price: Option[Double]): Unit = {
     price.foreach { p =>

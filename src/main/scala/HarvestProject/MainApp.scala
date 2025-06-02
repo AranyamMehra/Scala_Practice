@@ -10,7 +10,6 @@ object MainApp
     val analyzers: List[Analyzer] = List(
       new BestFruitByMonth(),
       new BestGathererByMonth(),
-      new WorstFruitByMonth(),
       new bestAndWorstFruitOverall(),
       new bestGatherer()
     )

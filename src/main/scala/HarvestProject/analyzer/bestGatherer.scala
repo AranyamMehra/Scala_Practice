@@ -1,11 +1,10 @@
 package HarvestProject.analyzer
 
 import HarvestProject.{Analyzer, DateParser, HarvestRecord}
-import java.time.LocalDate
 import scala.collection.mutable
 
 class bestGatherer extends Analyzer {
-  private val gathererIncome = scala.collection.mutable.Map[String, Double]()
+  private val gathererIncome = mutable.Map[String, Double]()
 
   override def compute(record: HarvestRecord, price: Option[Double]): Unit = {
     price.foreach { p =>
