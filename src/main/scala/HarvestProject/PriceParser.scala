@@ -13,6 +13,5 @@ object PriceParser {
       PriceRecord(date, cols(0), cols(2).toDouble)
     }
   }
-
   lazy val priceMap: Map[(LocalDate, String), Double] = parse("src/main/scala/Data/prices.csv").map(r => ((r.date, r.fruit), r.price)).toMap
 }
