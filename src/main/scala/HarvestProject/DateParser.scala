@@ -8,5 +8,5 @@ object DateParser {
 
   def parseHarvestDate(dateStr: String): LocalDate = LocalDate.parse(dateStr, harvestFormatter)
   def parsePriceDate(dateStr: String): LocalDate = LocalDate.parse(dateStr, priceFormatter)
-  def formatToMonth(date: LocalDate): String = date.format(DateTimeFormatter.ofPattern("yyyy-MM"))
+  def formatToMonth(date: LocalDate): String = date.format(DateTimeFormatter.ofPattern("MM-yyyy"))
 }
