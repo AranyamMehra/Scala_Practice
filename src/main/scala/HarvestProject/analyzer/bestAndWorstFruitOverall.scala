@@ -8,10 +8,7 @@ class bestAndWorstFruitOverall extends Analyzer {
   override def compute(record: HarvestRecord, price: Option[Double]): Unit = {
     price.foreach { p =>
       val income = record.amount * p
-      fruitIncomeOverall.update(
-        record.fruit,
-        fruitIncomeOverall.getOrElse(record.fruit, 0.0) + income
-      )
+      fruitIncomeOverall.update(record.fruit, fruitIncomeOverall.getOrElse(record.fruit, 0.0) + income)
     }
   }
 

@@ -9,10 +9,7 @@ class bestGatherer extends Analyzer {
   override def compute(record: HarvestRecord, price: Option[Double]): Unit = {
     price.foreach { p =>
       val income = record.amount * p
-      gathererIncome.update(
-        record.gatherer,
-        gathererIncome.getOrElse(record.gatherer, 0.0) + income
-      )
+      gathererIncome.update(record.gatherer, gathererIncome.getOrElse(record.gatherer, 0.0) + income)
     }
   }
 
