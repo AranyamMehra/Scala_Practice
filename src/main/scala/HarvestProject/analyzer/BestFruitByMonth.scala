@@ -4,32 +4,28 @@ import scala.collection.mutable
 import HarvestProject.{Analyzer, DateParser, HarvestRecord}
 
 class BestFruitByMonth extends Analyzer {
-  private val fruitIncomeByMonth = mutable.Map[(String, String), Double]()
+  private val fruitMonthIncome = mutable.Map[(String, String), Double]()
+  private val bestByMonth = mutable.Map[String, (String, Double)]()
 
-  override def compute(record: HarvestRecord, price: Option[Double]): Unit = {
-    price.foreach { p =>
-      val income = record.amount * p
+  override def compute(record: HarvestRecord, priceOpt: Option[Double]): Unit = {
+    priceOpt.foreach { price =>
       val month = DateParser.formatToMonth(record.date)
       val key = (month, record.fruit)
-      fruitIncomeByMonth.update(key, fruitIncomeByMonth.getOrElse(key, 0.0) + income)
+      val income = record.amount * price
+
+      val updatedIncome = fruitMonthIncome.getOrElse(key, 0.0) + income
+      fruitMonthIncome.update(key, updatedIncome)
+
+      bestByMonth.updateWith(month) {
+        case Some((_, bestIncome)) if updatedIncome > bestIncome => Some((record.fruit, updatedIncome))
+        case Some(existing) => Some(existing)
+        case None => Some((record.fruit, updatedIncome))
+      }
     }
   }
-
   override def report(): Unit = {
-    val bestByMonth = fruitIncomeByMonth
-      .groupBy(_._1._1)
-      .view.mapValues(_.maxBy(_._2))
-      .map { case (month, ((_, fruit), income)) => s"$month: $fruit ($income)" }
-
-    val worstByMonth = fruitIncomeByMonth
-      .groupBy(_._1._1)
-      .view.mapValues(_.minBy(_._2))
-      .map { case (month, ((_, fruit), income)) => s"$month: $fruit ($income)" }
-
-    println("\nBest fruit by month:")
+    println()
+    println("Best Fruit by month (based on Income):")
     println(bestByMonth.mkString("\n"))
-    println ()
-    println("\nWorst fruit by month:")
-    println(worstByMonth.mkString("\n"))
   }
 }
