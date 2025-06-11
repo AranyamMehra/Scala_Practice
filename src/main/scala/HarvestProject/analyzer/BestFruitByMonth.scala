@@ -13,19 +13,24 @@ class BestFruitByMonth extends Analyzer {
       val key = (month, record.fruit)
       val income = record.amount * price
 
-      val updatedIncome = fruitMonthIncome.getOrElse(key, 0.0) + income
-      fruitMonthIncome.update(key, updatedIncome)
+      val totalIncome = fruitMonthIncome.getOrElse(key, 0.0) + income
+      fruitMonthIncome.update(key, totalIncome)
 
-      bestByMonth.updateWith(month) {
-        case Some((_, bestIncome)) if updatedIncome > bestIncome => Some((record.fruit, updatedIncome))
-        case Some(existing) => Some(existing)
-        case None => Some((record.fruit, updatedIncome))
-      }
+      val currentBest = bestByMonth.get(month)
+      bestByMonth.update(
+        month,
+        currentBest match {
+          case Some((_, bestIncome)) if totalIncome > bestIncome => (record.fruit, totalIncome)
+          case Some(_) => currentBest.get
+          case None => (record.fruit, totalIncome)
+        }
+      )
     }
   }
+
   override def report(): Unit = {
     println()
-    println("Best Fruit by month (based on Income):")
+    println("Best fruit by month (based on total income):")
     println(bestByMonth.mkString("\n"))
   }
 }

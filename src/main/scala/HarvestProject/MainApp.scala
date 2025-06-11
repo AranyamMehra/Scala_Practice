@@ -11,8 +11,8 @@ object MainApp
       new BestFruitByMonth(),
       new WorstFruitByMonth(),
       new BestGathererByMonth(),
-//      new bestAndWorstFruitOverall(),
-//      new bestGatherer()
+      new bestAndWorstFruitOverall(),
+      new bestGatherer()
     )
 
     for (record <- HarvestParser.parse("src/main/scala/Data/harvest.csv")) {
